@@ -13,22 +13,10 @@ int main()
 
 int abs(int n)
 {
-    if(n>=0)
-        return n;
-    else
-        return -n;
+    return n>=0?n:-n;
 }
 
 int gcd(int a, int b)
 {
-    if(!a&&!b)
-        return -1;
-    else if(!a)
-        return b;
-    else if(!b)
-        return a;
-    else if(a>b)
-        return gcd(a%b, b);
-    else
-        return gcd(a, b%a);
+    return !a&&!b?-1:!a?b:!b?a:a>b?gcd(a%b, b):gcd(a, b%a);
 }
