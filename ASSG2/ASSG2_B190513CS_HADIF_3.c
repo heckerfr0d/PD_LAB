@@ -27,12 +27,5 @@ int bsearch(int *a, int low, int up, int x)
 
     int mid = (low+up)/2;
 
-    if(x==a[mid])
-        return mid;
-
-    if(x<a[mid])
-        return bsearch(a, low, mid-1, x);
-
-    if(x>a[mid])
-        return bsearch(a, mid+1, up, x);
+    return x==a[mid]?mid:x<a[mid]?bsearch(a, low, mid-1, x):bsearch(a, mid+1, up, x);
 }
