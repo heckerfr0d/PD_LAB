@@ -30,5 +30,5 @@ int bsearch(int *a, int low, int up, int x)
 
     int mid = (low+up)/2;
 
-    return x==a[mid]?mid:x<a[mid]?bsearch(a, low, mid-1, x):bsearch(a, mid+1, up, x);
+    return (x==a[mid] && (mid==0 || a[mid-1]<x)) ? mid : (x<a[mid] || a[mid-1]==x) ? bsearch(a, low, mid-1, x) : bsearch(a, mid+1, up, x);
 }
