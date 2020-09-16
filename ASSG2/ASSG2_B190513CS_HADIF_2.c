@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int fact(int);
+long fact(int);
 
 int main()
 {
@@ -8,14 +8,16 @@ int main()
     scanf("%d", &n);
 
     if(n>=0)
-        printf("%d\n", fact(n));
+        printf("%ld\n", fact(n));
+    else if(n>20)
+        printf("This program currently only supports values from 0-20.\n");
     else
-        printf("Factorial for negative integers is not defined.\n");
+        printf("Factorial is not defined for negative integers.\n");
 
     return 0;
 }
 
-int fact(int n)
+long fact(int n)
 {
     return n<2?1:n*fact(n-1);
 }

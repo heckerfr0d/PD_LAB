@@ -4,19 +4,22 @@ int bsearch(int*, int, int, int);
 
 int main()
 {
-    int n, i, x;
+    int n, i, x, m;
 
     scanf("%d", &n);
+    scanf("%d", &m);
 
     int a[n];
 
     for(i=0;i<n;i++)
         scanf("%d", &a[i]);
 
-    scanf("%d", &x);
-
-    printf("%d\n", bsearch(a, 0, n-1, x));
-
+    while(m)
+    {
+        scanf("%d", &x);
+        printf("%d\n", bsearch(a, 0, n-1, x));
+        m--;
+    }
     return 0;
 }
 
