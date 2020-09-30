@@ -19,5 +19,5 @@ int main()
 
 long fact(int n)
 {
-    return n<2?1:n*fact(n-1);
+    return n<2 ? 1 : n*fact(n-1);
 }
