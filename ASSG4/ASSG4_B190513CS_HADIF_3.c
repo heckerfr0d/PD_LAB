@@ -1,9 +1,11 @@
 #include<stdio.h>
+#include<string.h>
 
 struct emp_deets
 {
     char name[32];
     int salary;
+    int leave;
     int workpd;
 };
 
@@ -11,10 +13,12 @@ void insert(struct emp_deets*, int);
 void print_noincrement(struct emp_deets*, int);
 void print_finalsalary(struct emp_deets*, int);
 void print_workperday(struct emp_deets*, int, int);
+int computeDeductions(struct emp_deets*, char*, int);
 
 int main()
 {
     struct emp_deets emp[10];
+    char ename[32];
     char c;
     int i=0;
     do
@@ -37,6 +41,10 @@ int main()
             scanf("%d", &w);
             print_workperday(emp, w, i);
             break;
+        case 'c':
+            scanf(" %s", ename);
+            printf("%s %d\n", ename, computeDeductions(emp, ename, i));
+            break;
         }
     }   while(c!='t');
     return 0;
@@ -44,9 +52,8 @@ int main()
 
 void insert(struct emp_deets *emp, int i)
 {
-    gets(emp[i].name);
-    scanf("%d", &emp[i].salary);
-    scanf("%d", &emp[i].workpd);
+    scanf(" %s%d%d", emp[i].name, &emp[i].leave, &emp[i].workpd);
+    emp[i].salary = 30000 - (emp[i].leave>5 ? (emp[i].leave-5)*1000 : 0);
 }
 
 void print_noincrement(struct emp_deets *emp, int n)
@@ -73,4 +80,13 @@ void print_workperday(struct emp_deets *emp, int w, int n)
     for(i=0;i<n;i++)
         if(emp[i].workpd==w)
             printf("%s %d\n", emp[i].name, emp[i].salary);
+}
+
+int computeDeductions(struct emp_deets *emp, char *ename, int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+        if(!strcmp(ename, emp[i].name))
+            return emp[i].leave>5 ? (emp[i].leave-5)*1000 : 0;
+    return -1;
 }
