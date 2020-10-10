@@ -48,7 +48,7 @@ void merge(int a[], int p, int q, int r)
     int k = p;
     while(i<n1 && j<n2)
     {
-        if(L[i]<R[j])
+        if(L[i]<=R[j])
         {
             a[k]=L[i++];
             k++;
@@ -57,22 +57,20 @@ void merge(int a[], int p, int q, int r)
         {
             a[k]=R[j++];
             k++;
+            c+=n1-i;
         }
-        c++;
     }
 
     while(i<n1)
     {
         a[k]=L[i++];
         k++;
-        c++;
     }
 
     while(j<n2)
     {
         a[k]=R[j++];
         k++;
-        c++;
     }
 }
 

@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int heapsize, n, c=0;
+int heapsize, c=0;
 void max_heapify(int*, int);
 void build_max_heap(int*);
 void heapsort(int*);
@@ -10,10 +10,10 @@ void print(int*);
 int main()
 {
     int i;
-    scanf("%d", &n);
-    int a[n];
-    heapsize = n;
-    for(i=0;i<n;i++)
+    scanf("%d", &heapsize);
+    int a[heapsize+1];
+    a[heapsize] = 1001;
+    for(i=0;i<heapsize;i++)
         scanf("%d", &a[i]);
     heapsort(a);
     print(a);
@@ -35,7 +35,7 @@ void max_heapify(int *A, int i)
 void build_max_heap(int *A)
 {
     int i;
-    for(i=(n-1)/2;i>=0;i--)
+    for(i=(heapsize-1)/2;i>=0;i--)
         max_heapify(A, i);
 }
 
@@ -43,7 +43,7 @@ void heapsort(int *A)
 {
     int i;
     build_max_heap(A);
-    for(i=n-1;i>0;i--)
+    for(i=heapsize-1;i>0;i--)
     {
         swap(A, A+i);
         heapsize--;
@@ -53,9 +53,8 @@ void heapsort(int *A)
 
 void print(int *A)
 {
-    int i;
-    for(i=0;i<n;i++)
-        printf("%d ", A[i]);
+    for(;*A<1001;A++)
+        printf("%d ", *A);
     printf("\n%d\n", c);
 }
 
