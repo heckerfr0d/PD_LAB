@@ -1,18 +1,24 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int heapsize=0;
-int heap_min(int*);
-int heap_extract_min(int*);
-void min_heapify(int*, int);
-void min_heap_insert(int*, int);
-void heap_decrease_key(int*, int, int);
+typedef struct heap{
+    int *a;
+    int heapsize;
+} queue;
+
+int heap_min(queue*);
+int heap_extract_min(queue*);
+void min_heapify(queue*, int);
+void min_heap_insert(queue*, int);
+void heap_decrease_key(queue*, int, int);
 void swap(int*, int*);
 
 int main()
 {
     char c;
-    int *q = NULL;
+    queue *q;
+    q->a = NULL;
+    q->heapsize = 0;
     int j, k;
     do
     {
@@ -21,7 +27,7 @@ int main()
         {
         case 'i':
             scanf("%d", &k);
-            q = (int*)realloc(q, (++heapsize)*sizeof(int));
+            q->a = (int*)realloc(q->a, (++q->heapsize)*sizeof(int));
             min_heap_insert(q, k);
             break;
         case 'e':
@@ -35,21 +41,21 @@ int main()
             heap_decrease_key(q, j, k);
         }
     }   while(c!='s');
-    free(q);
+    free(q->a);
     return 0;
 }
 
-int heap_min(int *Q)
+int heap_min(queue* Q)
 {
-    return heapsize ? Q[0] : -1;
+    return Q->heapsize ? Q->a[0] : -1;
 }
 
-int heap_extract_min(int *Q)
+int heap_extract_min(queue* Q)
 {
-    if(heapsize)
+    if(Q->heapsize)
     {
-        int min = Q[0];
-        Q[0] = Q[--heapsize];
+        int min = Q->a[0];
+        Q->a[0] = Q->a[--Q->heapsize];
         min_heapify(Q, 0);
         return min;
     }
@@ -57,37 +63,37 @@ int heap_extract_min(int *Q)
         return -1;
 }
 
-void min_heapify(int *Q, int i)
+void min_heapify(queue* Q, int i)
 {
     int l=2*i+1;
-    int smallest = l<heapsize && Q[l]<Q[i] ? l : i;
-    smallest = l+1<heapsize && Q[smallest]>Q[l+1] ? l+1 : smallest;
+    int smallest = l<Q->heapsize && Q->a[l]<Q->a[i] ? l : i;
+    smallest = l+1<Q->heapsize && Q->a[smallest]>Q->a[l+1] ? l+1 : smallest;
     if(smallest!=i)
     {
-        swap(Q+smallest, Q+i);
+        swap(Q->a+smallest, Q->a+i);
         min_heapify(Q, smallest);
     }
 }
 
-void min_heap_insert(int *Q, int k)
+void min_heap_insert(queue* Q, int k)
 {
-    Q[heapsize-1] = 1000000;
-    heap_decrease_key(Q, heapsize-1, k);
+    Q->a[Q->heapsize-1] = 1000000;
+    heap_decrease_key(Q, Q->heapsize-1, k);
 }
 
-void heap_decrease_key(int *Q, int i, int k)
+void heap_decrease_key(queue* Q, int i, int k)
 {
-    if(k>Q[i])
+    if(k>Q->a[i])
         printf("Cannot increase priority\n");
     else
     {
-        Q[i] = k;
-        int v = i%2 ? (i-1)/2 : i/2-1;
-        while(i>0 && Q[v]>Q[i])
+        Q->a[i] = k;
+        int v = (i-1)/2;
+        while(i>0 && Q->a[v]>Q->a[i])
         {
-            swap(Q+v, Q+i);
+            swap(Q->a+v, Q->a+i);
             i=v;
-            v = i%2 ? (i-1)/2 : i/2-1;
+            v = (i-1)/2;
         }
     }
 }

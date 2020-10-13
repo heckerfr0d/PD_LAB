@@ -1,60 +1,67 @@
 #include<stdio.h>
+#include<stdlib.h>
 
-int heapsize, c=0;
-void max_heapify(int*, int);
-void build_max_heap(int*);
-void heapsort(int*);
+typedef struct binaryHeap{
+    int *a;
+    int heapsize;
+} heap;
+
+int c=0;
+void max_heapify(heap, int);
+void build_max_heap(heap);
+void heapsort(heap);
 void swap(int*, int*);
-void print(int*);
+void print(heap);
 
 int main()
 {
     int i;
-    scanf("%d", &heapsize);
-    int a[heapsize+1];
-    a[heapsize] = 1001;
-    for(i=0;i<heapsize;i++)
-        scanf("%d", &a[i]);
-    heapsort(a);
-    print(a);
+    heap h1;
+    scanf("%d", &h1.heapsize);
+    h1.a = (int*)malloc((h1.heapsize)*sizeof(int));
+    for(i=0;i<h1.heapsize;i++)
+        scanf("%d", &h1.a[i]);
+    heapsort(h1);
+    print(h1);
     return 0;
 }
 
-void max_heapify(int *A, int i)
+void max_heapify(heap h, int i)
 {
     int l=2*i+1;
-    int largest = l<heapsize && ++c && A[l]>A[i] ? l : i;
-    largest = l+1<heapsize && ++c && A[largest]<A[l+1] ? l+1 : largest;
+    int largest = l<h.heapsize && ++c && h.a[l]>h.a[i] ? l : i;
+    largest = l+1<h.heapsize && ++c && h.a[largest]<h.a[l+1] ? l+1 : largest;
     if(largest!=i)
     {
-        swap(A+largest, A+i);
-        max_heapify(A, largest);
+        swap(h.a+largest, h.a+i);
+        max_heapify(h, largest);
     }
 }
 
-void build_max_heap(int *A)
+void build_max_heap(heap h)
 {
     int i;
-    for(i=(heapsize-1)/2;i>=0;i--)
-        max_heapify(A, i);
+    for(i=(h.heapsize-2)/2;i>=0;i--)
+        max_heapify(h, i);
 }
 
-void heapsort(int *A)
+void heapsort(heap h)
 {
     int i;
-    build_max_heap(A);
-    for(i=heapsize-1;i>0;i--)
+    build_max_heap(h);
+    for(i=h.heapsize-1;i>0;i--)
     {
-        swap(A, A+i);
-        heapsize--;
-        max_heapify(A, 0);
+        swap(h.a, h.a+i);
+        h.heapsize--;
+        max_heapify(h, 0);
     }
 }
 
-void print(int *A)
+void print(heap h)
 {
-    for(;*A<1001;A++)
-        printf("%d ", *A);
+    int i;
+    for(i=0;i<h.heapsize;i++)
+        printf("%d ", h.a[i]);
     printf("\n%d\n", c);
 }
 
