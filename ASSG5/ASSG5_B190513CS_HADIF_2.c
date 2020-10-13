@@ -32,6 +32,7 @@ int main()
             break;
         case 'e':
             printf("%d\n", heap_extract_min(q));
+            q->a = (int*)realloc(q->a, (q->heapsize)*sizeof(int));
             break;
         case 'm':
             printf("%d\n", heap_min(q));
