@@ -9,9 +9,8 @@ typedef struct imDb
 
 void store_Db(mDb*, int);
 int list_Db(mDb*, int);
-void popular_rating(mDb*, int);
+float popular_rating(mDb*, int);
 float best_r(mDb*, mDb*, mDb*, int, int);
-int max(int*, int);
 
 int main()
 {
@@ -19,7 +18,7 @@ int main()
     int n, s;
     scanf("%d", &n);
     mDb E[n+1], H[n+1], M[n+1];
-    E[n].rating = H[n].rating = M[n].rating = -1;
+    E[n].rating = H[n].rating = M[n].rating = 0;
     do
     {
         scanf("%c", &c);
@@ -37,15 +36,15 @@ int main()
         case 'p':
             scanf("%d", &s);
             if(s==1)
-                popular_rating(E, n);
+                printf("%.2f\n", popular_rating(E, n));
             else if(s==2)
-                popular_rating(H, n);
+                printf("%.2f\n", popular_rating(H, n));
             else if(s==3)
-                popular_rating(M, n);
+                printf("%.2f\n", popular_rating(M, n));
             break;
         case 'b':
             scanf("%d", &s);
-            best_r(E, H, M, n, s);
+            printf("%.2f\n", best_r(E, H, M, n, s));
             break;
         case 'l':
             scanf("%d", &s);
@@ -57,7 +56,6 @@ int main()
                 list_Db(M, n);
         }
     } while (c!='t');
-    
     return 0;
 }
 
@@ -65,9 +63,7 @@ void store_Db(mDb *Db, int n)
 {
     int i;
     for(i=0;i<n;i++)
-    {
         scanf("%s %f", Db[i].M_id, &Db[i].rating);
-    }
 }
 
 int list_Db(mDb *Db, int n)
@@ -75,31 +71,32 @@ int list_Db(mDb *Db, int n)
     int i;
     for(i=0;i<n;i++)
     {
-        printf("%s ", Db[i].M_id);
-        printf("%.2f\n", Db[i].rating);
-        if(Db[i+1].rating==Db[i].rating && Db[n].rating>0 && Db[n].rating<10)
+        printf("%s %.2f\n", Db[i].M_id, Db[i].rating);
+        if(Db[i+1].rating==Db[i].rating && Db[n].rating)
             n++;
     }
     return n;
 }
 
-void popular_rating(mDb *Db, int n)
+float popular_rating(mDb *Db, int n)
 {
-    int C[n], i, j;
-    for(i=0;i<n;i++)
-        C[i]=1;
-    for(i=0;i<n;i++)
+    int c=1, maxc=1, i;
+    float mode = Db[0].rating;
+    for(i=0;i<n-1;i++)
     {
-        for(j=i+1;j<n;j++)
+        if(Db[i+1].rating==Db[i].rating)
+            c++;
+        else
         {
-            if(Db[j].rating==Db[i].rating)
-                C[i]++;
+            if(c>maxc)
+            {
+                maxc = c;
+                mode = Db[i].rating;
+            }
+            c = 1;
         }
     }
-    int m = max(C, n);
-    for(i=0;i<n;i++)
-        if(C[i]==m)
-            printf("%.2f\n", Db[i].rating);
+    return mode;
 }
 
 float best_r(mDb *E, mDb *H, mDb *M, int n, int r)
@@ -111,34 +108,19 @@ float best_r(mDb *E, mDb *H, mDb *M, int n, int r)
         if(E[i].rating>=H[j].rating && E[i].rating>=M[k].rating)
         {
             strcpy(Db[m].M_id, E[i].M_id);
-            Db[m].rating = E[i].rating;
-            m++;
-            i++;
+            Db[m++].rating = E[i++].rating;
         }
         else if(H[j].rating>=E[i].rating && H[j].rating>=M[k].rating)
         {
             strcpy(Db[m].M_id, H[j].M_id);
-            Db[m].rating = H[j].rating;
-            m++;
-            j++;
+            Db[m++].rating = H[j++].rating;
         }
         else
         {
             strcpy(Db[m].M_id, M[k].M_id);
-            Db[m].rating = M[k].rating;
-            m++;
-            k++;
+            Db[m++].rating = M[k++].rating;
         }
     }
     r = list_Db(Db, r)-1;
-    printf("%.2f\n", Db[r].rating);
-}
-
-int max(int *C, int n)
-{
-    int i, max=C[0];
-    for(i=0;i<n;i++)
-        if(C[i]>max)
-            max = C[i];
-    return max;
+    return Db[r].rating;
 }

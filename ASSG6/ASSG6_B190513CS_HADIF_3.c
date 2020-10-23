@@ -47,7 +47,8 @@ int main()
 			printf("%s\n", getState(x, L));
 			break;
 		case 'l':
-			listWaitingP(L) ? printf("-1\n") : printf("");
+			if(listWaitingP(L))
+				printf("-1\n");
 			break;
 		case 'u':
 			scanf("%d %s", &x, s);

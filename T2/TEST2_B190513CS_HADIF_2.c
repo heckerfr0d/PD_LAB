@@ -4,7 +4,7 @@
 
 typedef struct str
 {
-    char word[8];
+    char str[8];
 } string;
 
 typedef struct imDb
@@ -33,9 +33,9 @@ int main()
         scanf("%d", &A[i].n);
         A[i].M_id = (string*)malloc(A[i].n*sizeof(string));
         A[i].rating = (float*)malloc((A[i].n+1)*sizeof(float));
-        A[i].rating[A[i].n] = -1;
+        A[i].rating[A[i].n] = 0;
         for(j=0;j<A[i].n;j++)
-            scanf("%s %f", A[i].M_id[j].word, A[i].rating+j);
+            scanf("%s %f", A[i].M_id[j].str, A[i].rating+j);
         heapsort(A[i]);
     }
     merge(A);
@@ -88,11 +88,6 @@ void merge(mDb A[])
         j[i]=0;
     }
     mDb B[n1];
-    for(i=0;i<n1;i++)
-    {
-        B[i].M_id = (string*)malloc(sizeof(string));
-        B[i].rating = (float*)malloc(sizeof(float));
-    }
     while(k<n1)
     {
         for(i=m-1;i>=0;i--)
@@ -100,13 +95,13 @@ void merge(mDb A[])
             if(A[i].rating[j[i]]>=A[large].rating[j[large]])
                 large=i;
         }
-        strcpy(B[k].M_id->word, A[large].M_id[j[large]].word);
-        *B[k].rating = A[large].rating[j[large]];
-        k++;
-        j[large]++;
+        B[k].M_id = (string*)malloc(sizeof(string));
+        B[k].rating = (float*)malloc(sizeof(float));
+        strcpy(B[k].M_id->str, A[large].M_id[j[large]].str);
+        *B[k++].rating = A[large].rating[j[large]++];
     }
     for(i=0;i<n1;i++)
-        printf("\n%s %.2f", B[i].M_id->word, *B[i].rating);
+        printf("\n%s %.2f", B[i].M_id->str, *B[i].rating);
 }
 
 void strswap(string *A, string *B)
@@ -115,9 +110,9 @@ void strswap(string *A, string *B)
     int i;
     for(i=4;i<7;i++)
     {
-        t = A->word[i];
-        A->word[i] = B->word[i];
-        B->word[i] = t;
+        t = A->str[i];
+        A->str[i] = B->str[i];
+        B->str[i] = t;
     }
 }
 
