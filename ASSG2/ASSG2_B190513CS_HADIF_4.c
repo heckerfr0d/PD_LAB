@@ -27,8 +27,7 @@ int main()
 
 int lim(int *a, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         if(a[i+1]<a[i])
             return i+1;
 }

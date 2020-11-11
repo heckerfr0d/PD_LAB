@@ -18,32 +18,29 @@ int main()
 
 void get_inspection_time(int *D, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         scanf("%d", D+i);
 }
 
 void get_times(int* D, int *T, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         scanf("%d %d", T+i, D+i);
 }
 
 void display(int *C, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         printf("%d ", C[i]);
     printf("\n");
 }
 
 void visit_ward(int *D, int *C, int *T, int n, int t)
 {
-    int flag, t1=0, i, k, min;
+    int flag, t1=0, k, min;
     loop:
     flag=0;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
     {
         if(T[i]<=t1 && D[i]>0)
         {

@@ -16,12 +16,11 @@ void print(L[]);
 
 int main()
 {
-    int i;
     scanf("%d%d", &n1, &n2);
     L L1[n1+n2], L2[n1];
-    for(i=0;i<n1;i++)
+    for(int i=0;i<n1;i++)
         scanf("%s %f", L1[i].name, &L1[i].cgpa);
-    for(i=0;i<n2;i++)
+    for(int i=0;i<n2;i++)
         scanf("%s %f", L2[i].name, &L2[i].cgpa);
     combine(L1, L2);
     print(L1);
@@ -51,7 +50,6 @@ void combine(L L1[], L L2[])
 
 void print(L L1[])
 {
-    int i;
-    for(i=0;i<n1+n2;i++)
+    for(int i=0;i<n1+n2;i++)
         printf("\n%s %.2f", L1[i].name, L1[i].cgpa);
 }

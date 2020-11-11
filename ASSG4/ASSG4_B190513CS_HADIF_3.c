@@ -58,16 +58,14 @@ void insert(struct emp_deets *emp, int i)
 
 void print_noincrement(struct emp_deets *emp, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         if(emp[i].workpd<8)
             printf("%s %d\n", emp[i].name, emp[i].salary);
 }
 
 void print_finalsalary(struct emp_deets *emp, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
     {
         emp[i].salary += emp[i].workpd>=8 ? emp[i].workpd<10 ? 50 : emp[i].workpd==10 ? 100 : 150 : 0;
         printf("%s %d\n", emp[i].name, emp[i].salary);
@@ -76,8 +74,7 @@ void print_finalsalary(struct emp_deets *emp, int n)
 
 void print_workperday(struct emp_deets *emp, int w, int n)
 {
-    int i=0;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         if(emp[i].workpd==w)
             printf("%s %d\n", emp[i].name, emp[i].salary);
 }

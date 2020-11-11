@@ -61,15 +61,13 @@ int main()
 
 void store_Db(mDb *Db, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         scanf("%s %f", Db[i].M_id, &Db[i].rating);
 }
 
 int list_Db(mDb *Db, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s %.2f\n", Db[i].M_id, Db[i].rating);
         if(Db[i+1].rating==Db[i].rating && Db[n].rating)
@@ -80,9 +78,9 @@ int list_Db(mDb *Db, int n)
 
 float popular_rating(mDb *Db, int n)
 {
-    int c=1, maxc=1, i;
+    int c=1, maxc=1;
     float mode = Db[0].rating;
-    for(i=0;i<n-1;i++)
+    for(int i=0;i<n-1;i++)
     {
         if(Db[i+1].rating==Db[i].rating)
             c++;

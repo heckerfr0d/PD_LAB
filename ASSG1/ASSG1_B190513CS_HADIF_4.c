@@ -29,9 +29,8 @@ int main()
 
 int* rot(int *a, int *b, int n, int k)
 {
-    int i;
     b=malloc(n*sizeof(int));
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         b[i]=a[(i+k+1)%n];
     return b;
 }

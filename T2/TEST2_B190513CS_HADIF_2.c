@@ -44,9 +44,8 @@ int main()
 
 void heapsort(mDb A)
 {
-    int i;
     buildminheap(A);
-    for(i=A.n-1;i>0;i--)
+    for(int i=A.n-1;i>0;i--)
     {
         swap(A.rating, A.rating+i);
         strswap(A.M_id, A.M_id+i);
@@ -57,16 +56,15 @@ void heapsort(mDb A)
 
 void buildminheap(mDb A)
 {
-    int i, k = (A.n-(A.n%h ? A.n%h : h))/h;
-    for(i=k;i>=0;i--)
+    int k = (A.n-(A.n%h ? A.n%h : h))/h;
+    for(int i=k;i>=0;i--)
         minheapify(A, i);
 }
 
 void minheapify(mDb A, int i)
 {
-    int j;
     int smallest = i;
-    for(j=2*i+1;j<=2*i+h;j++)
+    for(int j=2*i+1;j<=2*i+h;j++)
     {
         if(j<A.n && A.rating[j]<A.rating[smallest])
             smallest = j;
@@ -107,8 +105,7 @@ void merge(mDb A[])
 void strswap(string *A, string *B)
 {
     char t;
-    int i;
-    for(i=4;i<7;i++)
+    for(int i=4;i<7;i++)
     {
         t = A->str[i];
         A->str[i] = B->str[i];

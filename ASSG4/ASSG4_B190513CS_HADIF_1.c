@@ -51,8 +51,7 @@ int partition(int *A, int p, int q, int r)
 
 void print(int *A, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         printf("%d ", A[i]);
     printf("\n");
 }

@@ -17,8 +17,7 @@ int main()
 
 void read(int *A, int *B, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         scanf("%d %d", &A[i], &B[i]);
 }
 
@@ -53,8 +52,7 @@ void swap(int *a, int *b)
 
 int lsearch(int *a, int n, int x)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         if(a[i]==x)
             return i;
 }

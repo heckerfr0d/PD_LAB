@@ -76,7 +76,6 @@ void merge(int a[], int p, int q, int r)
 
 void print(int a[], int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         printf("%d ", a[i]);
 }

@@ -49,7 +49,6 @@ void combine(L L1, L L2)
 
 void print(L L1)
 {
-    int i;
-    for(i=0;i<L1.length;i++)
+    for(int i=0;i<L1.length;i++)
         printf("%.2f ", L1.cgpa[i]);
 }

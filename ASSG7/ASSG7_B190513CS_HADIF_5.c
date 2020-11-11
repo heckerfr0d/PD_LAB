@@ -19,7 +19,6 @@ int main()
     str S;
     S = (str)malloc(sizeof(str));
     char c[100];
-    int i;
     scanf("%s", c);
     S->n = strlen(c);
     S->A = (char*)malloc((S->n/2)*sizeof(char));

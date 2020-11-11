@@ -23,11 +23,10 @@ int main()
 
 int evaluatePostFix(char *s)
 {
-    int i;
     stack op = (stack)malloc(sizeof(stack));
     op->a = (int*)malloc(getsize(s)*sizeof(int));
     op->top = -1;
-    for(i=0;s[i];i++)
+    for(int i=0;s[i];i++)
     {
         if(s[i]==' ')
             continue;

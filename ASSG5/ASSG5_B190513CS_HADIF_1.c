@@ -15,11 +15,10 @@ void print(heap);
 
 int main()
 {
-    int i;
     heap h1;
     scanf("%d", &h1.heapsize);
     h1.a = (int*)malloc((h1.heapsize)*sizeof(int));
-    for(i=0;i<h1.heapsize;i++)
+    for(int i=0;i<h1.heapsize;i++)
         scanf("%d", &h1.a[i]);
     heapsort(h1);
     print(h1);
@@ -40,16 +39,14 @@ void max_heapify(heap h, int i)
 
 void build_max_heap(heap h)
 {
-    int i;
-    for(i=(h.heapsize-2)/2;i>=0;i--)
+    for(int i=(h.heapsize-2)/2;i>=0;i--)
         max_heapify(h, i);
 }
 
 void heapsort(heap h)
 {
-    int i;
     build_max_heap(h);
-    for(i=h.heapsize-1;i>0;i--)
+    for(int i=h.heapsize-1;i>0;i--)
     {
         swap(h.a, h.a+i);
         h.heapsize--;
@@ -59,8 +56,7 @@ void heapsort(heap h)
 
 void print(heap h)
 {
-    int i;
-    for(i=0;i<h.heapsize;i++)
+    for(int i=0;i<h.heapsize;i++)
         printf("%d ", h.a[i]);
     printf("\n%d\n", c);
 }

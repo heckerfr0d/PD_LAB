@@ -35,7 +35,6 @@ int insertion_sort(int *a, int n)
 
 void print(int *a, int n)
 {
-    int i;
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
         printf("%d ", a[i]);
 }
