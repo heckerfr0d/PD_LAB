@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-typedef struct stack
-{
+typedef struct stack{
     int *a;
     int top;
 } *stack;

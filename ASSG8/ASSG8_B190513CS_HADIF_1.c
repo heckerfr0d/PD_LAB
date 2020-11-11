@@ -3,8 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-typedef struct stack
-{
+typedef struct stack{
     char *a;
     int top;
 } *stack;
@@ -13,7 +12,7 @@ char* inFixToPostFix(char*);
 int isp(char);
 int icp(char);
 void push(stack, char);
-int pop(stack);
+char pop(stack);
 int stackEmpty(stack);
 int getsize(char*);
 
@@ -40,9 +39,7 @@ char* inFixToPostFix(char *s)
         {
             while(!stackEmpty(op) && op->a[op->top]!='(')
                 s1[j++] = pop(op);
-            if(op->a[op->top]=='(')
-                pop(op);
-            else
+            if(pop(op) != '(')
                 exit(1);
         }
         else if(stackEmpty(op) || icp(s[i])>isp(op->a[op->top]))
@@ -71,7 +68,7 @@ void push(stack S, char k)
     S->a[++S->top] = k;
 }
 
-int pop(stack S)
+char pop(stack S)
 {
     if(!stackEmpty(S))
         return S->a[S->top--];

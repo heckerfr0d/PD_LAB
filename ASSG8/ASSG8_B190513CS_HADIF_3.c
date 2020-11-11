@@ -2,20 +2,17 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-typedef struct node
-{
+typedef struct node{
     char data;
     struct node *left;
     struct node *right;
 } *node;
 
-typedef struct expTree
-{
+typedef struct expTree{
     node root;
 } *tree;
 
-typedef struct stack
-{
+typedef struct stack{
     node *a;
     int top;
 } *stack;
@@ -70,7 +67,10 @@ node constructTree(char* s)
         if(isalpha(s[i]))
             push(S, createNode(s[i], NULL, NULL));
         else
-            push(S, createNode(s[i], pop(S), pop(S)));
+        {
+            node rc = pop(S), lc = pop(S);
+            push(S, createNode(s[i], lc, rc));
+        }
     }
     return pop(S);
 }

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-typedef struct stack
-{
+typedef struct stack{
     int *a;
     int top;
 } *stack;
@@ -41,20 +40,20 @@ int evaluatePostFix(char *s)
         }
         else
         {
-            int v1 = pop(op), v2 = pop(op);
+            int v2 = pop(op), v1 = pop(op);
             switch(s[i])
             {
             case '+':
-                push(op, v2+v1);
+                push(op, v1+v2);
                 break;
             case '-':
-                push(op, v2-v1);
+                push(op, v1-v2);
                 break;
             case '*':
-                push(op, v2*v1);
+                push(op, v1*v2);
                 break;
             case '/':
-                push(op, v2/v1);
+                push(op, v1/v2);
             }
         }
     }
