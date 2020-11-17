@@ -79,7 +79,7 @@ void inOrder(tree T)
 {
     if(!T->root)
         return;
-    struct expTree t = *T;
+    struct expTree t;
     if(T->root->left)
     {
         t.root = T->root->left;
@@ -97,7 +97,7 @@ void preOrder(tree T)
 {
     if(!T->root)
         return;
-    struct expTree t = *T;
+    struct expTree t;
     printf("%c", T->root->data);
     if(T->root->left)
     {
@@ -115,7 +115,7 @@ void postOrder(tree T)
 {
     if(!T->root)
         return;
-    struct expTree t = *T;
+    struct expTree t;
     if(T->root->left)
     {
         t.root = T->root->left;
