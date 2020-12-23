@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
 typedef struct bstnode{
     int key;
@@ -17,6 +15,61 @@ typedef struct ll{
     set head;
 } *list;
 
+bst createNode(int);
+void insertSet(list, set);
+bst search(set, int);
+set findSet(list, int);
+void deleteSet(list, set);
+void insert(set, bst);
+void transplant(set, bst, bst);
+void delete(set, bst);
+void PoMod(set, set);
+void mergeSets(list, int, int);
+void inOrder(set);
+void printCollection(list);
+
+int main()
+{
+    char c;
+    int n, a, i;
+    list l = (list)malloc(sizeof(struct ll));
+    l->head = NULL;
+    do
+    {
+        set s = (set)malloc(sizeof(struct bst));
+        s->next = NULL;
+        s->root = NULL;
+        scanf("%c", &c);
+        switch (c)
+        {
+        case 'i':
+            scanf("%d", &n);
+            for(i=0;i<n;i++)
+            {
+                scanf("%d", &a);
+                insert(s, createNode(a));
+            }
+            insertSet(l, s);
+            break;
+        case 'd':
+            scanf("%d", &a);
+            set s = findSet(l, a);
+            deleteSet(l, s);
+            break;
+        case 'f':
+            scanf("%d", &a);
+            findSet(l, a);
+            break;
+        case 'm':
+            scanf("%d%d", &a, &i);
+            mergeSets(l, a, i);
+            break;
+        case 'p':
+            printCollection(l);
+        }
+    } while (c!='e');
+    return 0;
+}
 
 bst createNode(int c)
 {
@@ -30,9 +83,8 @@ bst createNode(int c)
 
 void insertSet(list C, set S)
 {
-    set t = S;
-    t->next = C->head;
-    C->head = t;
+    S->next = C->head;
+    C->head = S;
 }
 
 bst search(set T, int k)
@@ -67,9 +119,8 @@ set findSet(list C, int k)
     return NULL;
 }
 
-void deleteSet(list C, int k)
+void deleteSet(list C, set t)
 {
-    set t = findSet(C, k);
     if(!t)
         return;
     if(!t->next)
@@ -81,7 +132,7 @@ void deleteSet(list C, int k)
             u = u->next;
         }
         p->next = NULL;
-        // free(t);
+        free(t);
     }
     else
     {
@@ -89,12 +140,14 @@ void deleteSet(list C, int k)
         set v = t->next;
         t->next = v->next;
         v->next = NULL;
-        // free(v);
+        free(v);
     }
 }
 
 void insert(set T, bst x)
 {
+    if(!x)
+        return;
     bst y = NULL, t = T->root;
     while(t)
     {
@@ -111,14 +164,7 @@ void insert(set T, bst x)
     else
         y->right = x;
     x->p = y;
-}
-
-bst min(bst x)
-{
-    bst t = x;
-    while(t->left)
-        t = t->left;
-    return t;
+    x->left = x->right = NULL;
 }
 
 void transplant(set T, bst x, bst y)
@@ -133,17 +179,19 @@ void transplant(set T, bst x, bst y)
         y->p = x->p;
 }
 
-int delete(set T, bst x)
+void delete(set T, bst x)
 {
     if(!x)
-        return -1;
+        return;
     if(!x->left)
         transplant(T, x, x->right);
     else if(!x->right)
         transplant(T, x, x->left);
     else
     {
-        bst y = min(x->right);
+        bst y = x->right;
+        while(y->left)
+            y = y->left;
         if(y->p!=x)
         {
             transplant(T, y, y->right);
@@ -154,42 +202,28 @@ int delete(set T, bst x)
         y->left = x->left;
         y->left->p = y;
     }
-    int k = x->key;
-    // free(x);
-    return k;
+}
+
+void PoMod(set T, set S)
+{
+    if(!T->root)
+        return;
+    struct bst t;
+    t.root = T->root->left;
+    PoMod(&t, S);
+    t.root = T->root->right;
+    PoMod(&t, S);
+    t.root = T->root;
+    delete(T, T->root);
+    insert(S, t.root);
 }
 
 void mergeSets(list C, int k1, int k2)
 {
     set s1 = findSet(C, k1);
     set s2 = findSet(C, k2);
-    while(s2->root)
-    {
-        bst t = min(s2->root);
-        insert(s1, t);
-        delete(s2, t);
-    }
-    if(!s2)
-        return;
-    if(!s2->next)
-    {
-        set u = C->head, p = NULL;
-        while(u->next)
-        {
-            p = u;
-            u = u->next;
-        }
-        p->next = NULL;
-        // free(s2);
-    }
-    else
-    {
-        s2->root = s2->next->root;
-        set v = s2->next;
-        s2->next = v->next;
-        v->next = NULL;
-        // free(v);
-    }
+    PoMod(s2, s1);
+    deleteSet(C, s2);
 }
 
 void inOrder(set T)
@@ -197,17 +231,11 @@ void inOrder(set T)
     if(!T->root)
         return;
     struct bst t;
-    if(T->root->left)
-    {
-        t.root = T->root->left;
-        inOrder(&t);
-    }
+    t.root = T->root->left;
+    inOrder(&t);
     printf("%d ", T->root->key);
-    if(T->root->right)
-    {
-        t.root = T->root->right;
-        inOrder(&t);
-    }
+    t.root = T->root->right;
+    inOrder(&t);
 }
 
 void printCollection(list C)
@@ -219,50 +247,5 @@ void printCollection(list C)
         printf("\n");
         t = t->next;
     }
-}
-
-
-int main()
-{
-    char c;
-    int n, a, i;
-    list l = (list)malloc(sizeof(struct ll));
-    struct bst s[10000];
-    int k=0;
-    l->head = NULL;
-    do
-    {
-        s[k].root = NULL;
-        s[k].next = NULL;
-        scanf("%c", &c);
-        switch (c)
-        {
-        case 'i':
-            scanf("%d", &n);
-            for(i=0;i<n;i++)
-            {
-                scanf("%d", &a);
-                insert(&s[k], createNode(a));
-            }
-            insertSet(l, &s[k]);
-            ++k;
-            break;
-        case 'd':
-            scanf("%d", &a);
-            deleteSet(l, a);
-            break;
-        case 'f':
-            scanf("%d", &a);
-            findSet(l, a);
-            break;
-        case 'm':
-            scanf("%d%d", &a, &i);
-            mergeSets(l, a, i);
-            break;
-        case 'p':
-            printCollection(l);
-        }
-    } while (c!='e');
-    return 0;
 }
 
