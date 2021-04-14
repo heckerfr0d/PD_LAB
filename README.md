@@ -53,7 +53,7 @@ ASSG7:
 ASSG8:  
     1. [Infix to Postfix Conversion of a Mathematical expression](https://github.com/heckerfr0d/PD_LAB/blob/master/ASSG8/ASSG8_B190513CS_HADIF_1.c)  
     2. [Postfix Expression Evaluation](https://github.com/heckerfr0d/PD_LAB/blob/master/ASSG8/ASSG8_B190513CS_HADIF_2.c)  
-    3. [Expression Tree Contruction and Recursive Traversal](https://github.com/heckerfr0d/PD_LAB/blob/master/ASSG8/ASSG8_B190513CS_HADIF_4.c)  
+    3. [Expression Tree Construction and Recursive Traversal](https://github.com/heckerfr0d/PD_LAB/blob/master/ASSG8/ASSG8_B190513CS_HADIF_4.c)  
     4. [Expression(postfix) read from a file and conversion to expression tree](https://github.com/heckerfr0d/PD_LAB/blob/master/ASSG8/ASSG8_B190513CS_HADIF_3.c)  
 
 ASSG9:  
